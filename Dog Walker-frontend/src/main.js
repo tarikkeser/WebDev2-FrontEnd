@@ -3,6 +3,9 @@ import Home from "./components/Home.vue";
 import About from "./components/About.vue";
 import Login from "./components/Login.vue";
 import Register from "./components/Register.vue";
+import MyDogs from "./components/MyDogs.vue";
+import FindWalker from "./components/FindWalker.vue";
+import Appointments from "./components/Appointments.vue";
 import "./assets/main.css";
 
 import { createApp } from "vue";
@@ -29,6 +32,18 @@ const routes = [
     path: "/about",
     component: About,
   },
+  // my dogs page
+  {
+    path: "/mydogs",
+    component: MyDogs,
+  },
+  // find walker page
+  {
+    path: "/findwalker",
+    component: FindWalker,
+  },
+  //appointments page
+
 ];
 const router = createRouter({
   history: createWebHistory(),

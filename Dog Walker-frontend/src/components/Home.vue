@@ -1,5 +1,10 @@
 <script>
-
+import CardList from "../components/Homepage/CardList.vue";
+export default {
+  components: {
+    CardList,
+  },
+};
 </script>
 
 <template>
@@ -14,23 +19,38 @@
       <button class="btn btn-primary btn-lg mt-3">Get Started</button>
     </div>
   </div>
+  <div class="container">
+    <h2 class="display-4 text-center mt-5">Why Walk Paw?</h2>
+    <CardList />
+  </div>
 </template>
 
 <style scoped>
+
 .hero {
   background-image: url("@/assets/images/test2.webp"); 
-  background-size: contain;
-  background-position: center;
+  background-size: contain;      
+  background-position: center;     
   background-repeat: no-repeat;
-  width: 100vw; 
-  height: 100vh; 
+  width: 100%;                     
+  height: 100vh;
   display: flex;
-  align-items: flex-start; 
-  justify-content: flex-start; 
-  padding: 50px; 
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 50px;
+  flex-direction: column;
+  box-sizing: border-box;      
+  overflow: hidden;                
 }
+
 .text-container {
   padding: 30px;
   max-width: 650px;
+}
+
+.container {
+  margin-top: 50px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 </style>

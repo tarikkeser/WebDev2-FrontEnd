@@ -10,19 +10,12 @@
                 <ul class="list-inline mb-0">
                     <li class="list-inline-item"><a href="#" class="text-muted">Privacy Policy</a></li>
                     <li class="list-inline-item"><a href="#" class="text-muted">Terms of Use</a></li>
-   
                 </ul>
             </div>
         </div>
     </div>
 </footer>
 </template>
-
 <style scoped>
-  .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: #f8f9fa; }
 </style>
 

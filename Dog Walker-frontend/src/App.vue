@@ -22,5 +22,5 @@ export default {
       <RouterView />
     </main>
   </div>
-
+  <Footer v-if="$route.path !== '/login' && $route.path !== '/register'" />
 </template>
