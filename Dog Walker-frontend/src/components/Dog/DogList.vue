@@ -7,15 +7,43 @@ export default {
   },
   data() {
     return {
-      //!!!!!! need to make some database connections I believe.
-      cards: [
+     // sample data for the cards (later data will be fetched from the API)
+      dogs: [
         {
-         // image:,
-        //  name:,
-        //  breed:,
-        //  age:,
-        //  size:,
+         image: "",
+         name: 'Max',
+         breed: "Golden Retriever",
+         age: 3,
+         size: "Medium",
         },
+        {
+          image: "",
+          name: 'Buddy',
+          breed: "Labrador",
+          age: 2,
+          size: "Large",
+          },
+          {
+          image: "",
+          name: 'Charlie',
+          breed: "Beagle",
+          age: 4,
+          size: "Small",
+          },
+          {
+          image: "",
+          name: 'Rocky',
+          breed: "Bulldog",
+          age: 5,
+          size: "Medium",
+          },
+          {
+          image: "",
+          name: 'Daisy',
+          breed: "Poodle",
+          age: 1,
+          size: "Small",
+        }
       ],
     };
   },
@@ -23,12 +51,14 @@ export default {
 </script>
 <template>
   <div class="card-container">
-    <InfoCard
-      v-for="(card, index) in cards"
+    <DogCard
+      v-for="(dog, index) in dogs"
       :key="index"
-      :title="card.title"
-      :text="card.text"
-      :image="card.image"
+      :image="dog.image"
+      :name="dog.name"
+      :breed="dog.breed"
+      :age="dog.age"
+      :size="dog.size"
     />
   </div>
 </template>

@@ -1,24 +1,20 @@
 <script>
-// example ? 
+import WalkerList from "../components/Walker/WalkerList.vue";
 export default {
-  data() {
-    return {
-      walkers: [],
-    };
-  },
-  created() {
-    fetch("http://localhost:3000/walkers")
-      .then((response) => response.json())
-      .then((data) => {
-        this.walkers = data;
-      });
+  components: {
+    WalkerList,
   },
 };
 </script>
 <template>
-
+  <div class="container mt-5">
+    <h2 class="mb-4">Find a Walker</h2>
+    <WalkerList />
+  </div>
 </template>
 
-<style scoped>
-
+<style>
+.container {
+  text-align: center;
+}
 </style>

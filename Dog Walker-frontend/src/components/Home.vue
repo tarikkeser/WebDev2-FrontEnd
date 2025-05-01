@@ -44,8 +44,8 @@ export default {
 }
 
 .text-container {
-  padding: 30px;
-  max-width: 650px;
+  padding: 10px;
+  max-width: 550px;
 }
 
 .container {

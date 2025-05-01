@@ -7,7 +7,7 @@ import about4 from "../assets/images/about4.jpg";
 export default {
   data() {
     return {
-      images: [about1, about2, about3, about4], // Dizi olarak saklıyoruz
+      images: [about1, about2, about3, about4], // array
     };
   },
 };

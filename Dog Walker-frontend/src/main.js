@@ -7,6 +7,7 @@ import MyDogs from "./components/MyDogs.vue";
 import FindWalker from "./components/FindWalker.vue";
 import Appointments from "./components/Appointments.vue";
 import "./assets/main.css";
+import { createPinia } from "pinia";
 
 import { createApp } from "vue";
 import App from "./App.vue";
@@ -53,5 +54,7 @@ const router = createRouter({
 const app = createApp(App);
 
 app.use(router);
-
+// INITIALIZE pinia in our main.js file
+// run query in terminal for pinia
+app.use(createPinia());
 app.mount("#app");

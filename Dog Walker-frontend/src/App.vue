@@ -1,7 +1,9 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
+import { useAuthStore } from '@/stores/auth';
 import { useRoute } from "vue-router";
 import Footer from "@/components/Footer.vue";
+
 
 export default {
   components: {
@@ -10,7 +12,10 @@ export default {
   },
   setup() {
     const route = useRoute();
-    return { route }
+    const authStore = useAuthStore();
+    authStore.initializeAuth();
+    
+    return { route,authStore }
   },
 };
 </script>
