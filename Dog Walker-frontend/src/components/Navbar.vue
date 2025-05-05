@@ -112,7 +112,7 @@ export default {
 <style scoped>
 .navbar {
   background-color: #e6830b;
-  width: 90%;
+  width: 95%;
   margin: 20px auto;
   border-radius: 16px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
@@ -124,7 +124,7 @@ export default {
 }
 .navbar-nav .nav-link {
   color: #000;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   margin: 0 40px;
 }
 .navbar-nav .nav-link:hover {

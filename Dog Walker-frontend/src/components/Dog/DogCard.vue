@@ -1,25 +1,40 @@
 <script>
 export default {
-  // props are used for passing data from parent to child components.
   props: {
-    image: String,
+    photo: String,
     name: String,
     breed: String,
     age: Number,
     size: String,
   },
+  data() {
+    return {
+      imageError: false,
+      defaultImage: 'https://placehold.co/400x300?text=No+Image'
+    }
+  },
+  methods: {
+    handleImageError() {
+      this.imageError = true;
+    }
+  }
 };
 </script>
 
 <template>
   <div class="card" style="width: 20rem">
-    <img class="card-img-top" :src="image" alt="Dog image " />
+    <img 
+      class="card-img-top" 
+      :src="imageError ? defaultImage : (photo || defaultImage)" 
+      @error="handleImageError"
+      :alt="name" 
+    />
     <div class="card-body">
       <h5 class="card-title">{{ name }}</h5>
       <p class="card-text">Breed: {{ breed }}</p>
       <p class="card-text">Age: {{ age }}</p>
       <p class="card-text">Size: {{ size }}</p>
-      <button class="btn btn-primary">Edit Details</button>
+      <slot name="actions"></slot> 
     </div>
   </div>
 </template>
