@@ -2,7 +2,7 @@
 import DogCard from "../Dog/DogCard.vue";
 import { useDogStore } from "@/stores/dog";
 import { useAuthStore } from "@/stores/auth";
-
+// check the options API structure.
 export default {
   name: "DogList",
   components: {
@@ -202,7 +202,6 @@ export default {
     </div>
   </div>
 </template>
-
 <style scoped>
 
 .action-buttons {
