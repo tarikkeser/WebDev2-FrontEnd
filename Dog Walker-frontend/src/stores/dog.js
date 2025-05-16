@@ -2,16 +2,6 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { API_ENDPOINTS } from "@/config"; 
 
-// Add axios interceptor
-axios.interceptors.request.use(config => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
-    config.headers['Content-Type'] = 'application/json';
-    return config;
-  });
-
 export const useDogStore = defineStore("dog", {
     state: () => ({
         dogs: [],

@@ -16,8 +16,7 @@ export default {
       <p class="lead mt-3">
         Whether you're looking for a trusted walker for your furry friend or hoping to spend time with lovable dogs while earning, Walk Paw is here for you. Join a community where tails wag with joy, paws find new paths, and every walk turns into an adventure!
       </p>
-      <button class="btn btn-primary btn-lg mt-3">Get Started</button>
-    </div>
+     </div>
   </div>
   <div class="container">
     <h2 class="display-4 text-center mt-5">Why Walk Paw?</h2>

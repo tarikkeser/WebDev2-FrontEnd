@@ -1,51 +1,51 @@
 <script>
 import WalkerCard from "../Walker/WalkerCard.vue";
+import { useWalkerStore } from "@/stores/walker";
+import { useAuthStore } from "@/stores/auth";
+
 
 export default {
+    name: "WalkerList", 
     components: {
         WalkerCard,
     },
     data() {
         return {
-            // sample data for the cards (later data will be fetched from the API)
-            walkers: [
-                {
-                    image: "",
-                    name: 'John Doe',
-                    experience: "5 years",
-                    rating: 4.8,
-                    price: 20,
-                },
-                {
-                    image: "",
-                    name: 'Jane Smith',
-                    experience: "3 years",
-                    rating: 4.5,
-                    price: 25,
-                },
-                {
-                    image: "",
-                    name: 'Mike Johnson',
-                    experience: "2 years",
-                    rating: 4.7,
-                    price: 15,
-                },
-                {
-                    image: "",
-                    name: 'Emily Davis',
-                    experience: "4 years",
-                    rating: 4.9,
-                    price: 30,
-                },
-                {
-                    image: "",
-                    name: 'Sarah Wilson',
-                    experience: "1 year",
-                    rating: 4.6,
-                    price: 18,
-                }
-            ],
+            walkerStore: useWalkerStore(),
+            authStore: useAuthStore(),
         };
+    },
+    computed: {
+        walkers() {
+            return this.walkerStore.getWalkers;
+        },
+    },
+    mounted() {
+        if (this.authStore.user) {
+            this.loadWalkers();
+        }
+        this.$watch(
+            () => this.authStore.user,
+            (user) => {
+                if (user && user.id) {
+                    this.loadWalkers();
+                }
+            }
+        );
+    },
+    methods: {
+        async loadWalkers() {
+            try {
+                if (!this.authStore.user?.id) {
+                    console.log("No user found");
+                    return;
+                }
+                await this.walkerStore.fetchWalkers();
+            } catch (error) {
+                console.error("Error loading walkers:", error);
+                this.error = "Failed to fetch walkers";
+            }
+        },
     },
 }
 </script>
@@ -54,10 +54,10 @@ export default {
         <WalkerCard
             v-for="(walker, index) in walkers"
             :key="index"
+            :id="walker.id"
             :image="walker.image"
             :name="walker.name"
             :experience="walker.experience"
-            :rating="walker.rating"
             :price="walker.price"
         />
     </div>

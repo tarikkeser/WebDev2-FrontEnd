@@ -5,6 +5,7 @@ import Login from "./components/Login.vue";
 import Register from "./components/Register.vue";
 import MyDogs from "./components/MyDogs.vue";
 import FindWalker from "./components/FindWalker.vue";
+import Request from "./components/Request.vue";
 import Appointments from "./components/Appointments.vue";
 import "./assets/main.css";
 import { createPinia } from "pinia";
@@ -43,6 +44,13 @@ const routes = [
     path: "/findwalker",
     component: FindWalker,
   },
+
+  // request page
+  {
+    path:"/request",
+    component: Request,
+  }
+
   //appointments page
 
 ];

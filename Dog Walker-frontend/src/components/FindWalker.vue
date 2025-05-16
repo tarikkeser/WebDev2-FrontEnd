@@ -1,8 +1,21 @@
 <script>
 import WalkerList from "../components/Walker/WalkerList.vue";
+
+
 export default {
   components: {
     WalkerList,
+
+  },
+  data() {
+    return {
+      selectedDogId: null,
+    };
+  },
+  methods: {
+    handleDogSelected(dogId) {
+      this.selectedDogId = dogId;
+    },
   },
 };
 </script>

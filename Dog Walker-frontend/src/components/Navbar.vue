@@ -82,6 +82,9 @@ export default {
               <li class="nav-item">
                 <RouterLink to="/findwalker" class="nav-link">Find Walker</RouterLink>
               </li>
+              <li class="nav-item">
+                <RouterLink to="/request" class="nav-link">My Requests</RouterLink>
+              </li>
             </template>
 
             <!-- Walker specific links -->
