@@ -39,6 +39,7 @@ export default {
     }
   },
   methods: {
+    // walker 
     async handleAccept(requestId) {
       try {
         await this.requestStore.acceptRequestByWalker(requestId);
@@ -48,6 +49,7 @@ export default {
         this.error = "Failed to accept request";
       }
     },
+    // walker
     async handleReject(requestId) {
       try {
         await this.requestStore.rejectRequestByWalker(requestId);
@@ -57,6 +59,7 @@ export default {
         this.error = "Failed to reject request";
       }
     },
+    // owner
     async handleCancel(requestId) {
       try {
         await this.requestStore.cancelRequestByOwner(requestId);
@@ -131,7 +134,7 @@ export default {
               <p><strong>Created:</strong> {{ request.formatted_created_at }}</p>
             </div>
             <div v-if="request.status === 'pending'" class="mt-3">
-              <button @click="handleCancel(request.id)" class="btn btn-danger">Cancel Request</button>
+              <button @click="handleCancel(request.id)" class="btn btn-danger"> Cancel Request</button>
             </div>
           </div>
         </div>

@@ -21,11 +21,27 @@ export default {
 </script>
 
 <template>
-  <Navbar v-if="$route.path !== '/login' && $route.path !== '/register'" />
-  <div class="container">
-    <main>
-      <RouterView />
-    </main>
+  <div class="page-container">
+    <Navbar v-if="$route.path !== '/login' && $route.path !== '/register'" />
+    <div class="content-wrap">
+      <main>
+        <RouterView />
+      </main>
+    </div>
+    <Footer v-if="$route.path !== '/login' && $route.path !== '/register'" />
   </div>
-  <Footer v-if="$route.path !== '/login' && $route.path !== '/register'" />
 </template>
+
+<style>
+.page-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrap {
+  flex: 1 0 auto;
+  padding-bottom: 2.5rem;
+}
+</style>

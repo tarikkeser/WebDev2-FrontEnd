@@ -27,17 +27,7 @@ export default {
       this.$router.push('/login')
     }
   },
-  // Add this to check what's happening
-  watch: {
-    currentUser: {
-      handler(newVal) {
-        console.log('Current user:', newVal)
-        console.log('Is owner:', this.isOwner)
-        console.log('Is walker:', this.isWalker)
-      },
-      immediate: true
-    }
-  }
+
 }
 </script>
 
@@ -57,16 +47,15 @@ export default {
       <!-- Menu -->
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <!-- Always visible -->
-          <li class="nav-item">
+  
+          <!-- Not authenticated -->
+          <template v-if="!isAuthenticated">
+              <li class="nav-item">
             <RouterLink to="/" class="nav-link">Home</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink to="/about" class="nav-link">About Us</RouterLink>
           </li>
-
-          <!-- Not authenticated -->
-          <template v-if="!isAuthenticated">
             <li class="nav-item">
               <RouterLink to="/login" class="nav-link">Login</RouterLink>
             </li>

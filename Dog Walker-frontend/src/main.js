@@ -49,9 +49,18 @@ const routes = [
   {
     path:"/request",
     component: Request,
-  }
-
+  },
+  {
+    path:"/requests",
+    component: Request,
+  },
   //appointments page
+ {
+  path:"/appointments",
+  component: Appointments,
+ }
+ // profile page
+ 
 
 ];
 const router = createRouter({
