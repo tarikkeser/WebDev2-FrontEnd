@@ -6,5 +6,5 @@ export const API_ENDPOINTS = {
   walker: `${API_BASE_URL}/walkers`,
   request: `${API_BASE_URL}/request`,
   appointment: `${API_BASE_URL}/appointments`,
- // profile: `${API_BASE_URL}/profile`,
+  profile: `${API_BASE_URL}/profile`,
 };

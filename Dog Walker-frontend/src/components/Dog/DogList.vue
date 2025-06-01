@@ -55,6 +55,16 @@ export default {
         this.error = "Failed to fetch dogs";
       }
     },
+    handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.formData.photo = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    },
     toggleForm(dog = null) {
       this.showForm = !this.showForm;
       if (dog) {

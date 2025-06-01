@@ -55,7 +55,7 @@ export default {
             v-for="(walker, index) in walkers"
             :key="index"
             :id="walker.id"
-            :image="walker.image"
+            :image="walker.profile_picture || 'https://placehold.co/150x150?text=No+Image'"
             :name="walker.name"
             :experience="walker.experience"
             :price="walker.price"

@@ -7,6 +7,7 @@ import MyDogs from "./components/MyDogs.vue";
 import FindWalker from "./components/FindWalker.vue";
 import Request from "./components/Request.vue";
 import Appointments from "./components/Appointments.vue";
+import Profile from "./components/Profile.vue";
 import "./assets/main.css";
 import { createPinia } from "pinia";
 
@@ -58,8 +59,13 @@ const routes = [
  {
   path:"/appointments",
   component: Appointments,
- }
+ },
  // profile page
+ {
+  path: "/profile",
+  component: Profile,
+ },
+
  
 
 ];
