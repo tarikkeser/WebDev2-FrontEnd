@@ -10,6 +10,9 @@ Run the following to get started:
 
 `npm run dev`
 
+`http://localhost:5173` to view the application. (Make sure the backend server is running)
+
+
 ## Login Credentials 
 # Owner role
 Email: oliver.owner@example.com
