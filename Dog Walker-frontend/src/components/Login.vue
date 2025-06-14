@@ -86,9 +86,9 @@ export default {
             <button
               type="submit"
               class="btn btn-dark btn-lg btn-block"
-              :disabled="isLoading"
+              :disabled="authStore.isLoading"
             >
-              {{ isLoading ? "Signing in..." : "Login" }}
+              {{ authStore.isLoading ? "Signing in..." : "Login" }}
             </button>
           </div>
 
