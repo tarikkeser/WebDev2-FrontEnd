@@ -21,11 +21,20 @@ export default {
     },
     requests() {
       return this.requestStore.getRequests;
+    },
+    pendingRequests() {
+      return this.requests.filter(request => request.status === 'pending');
+    },
+    historicRequests() {
+      return this.requests.filter(request => request.status !== 'pending');
     }
   },
   async created() {
     this.loading = true;
     try {
+      if(!this.authStore.user){
+        await this.authStore.fetchUser();
+      }
       if (this.isWalker) {
         await this.requestStore.fetchRequestsByWalker();
       } else {
@@ -80,9 +89,12 @@ export default {
 };
 </script>
 
+
 <template>
   <div class="container mt-5">
-    <h2 class="mb-4">My Requests</h2>
+    <div class="text-center mb-4">
+      <h2>My Requests</h2>
+    </div>
 
     <div v-if="loading" class="text-center">
       <div class="spinner-border" role="status">
@@ -98,43 +110,114 @@ export default {
       <p>No requests found.</p>
     </div>
 
-    <div v-else class="row">
-      <!-- Walker View -->
-      <div v-if="isWalker" class="col-12">
-        <div v-for="request in requests" :key="request.id" class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title">Request from {{ request.owner_name }}</h5>
-            <div class="card-text">
-              <p><strong>Dog:</strong> {{ request.dog_name }}</p>
-              <p><strong>Breed:</strong> {{ request.dog_breed }}</p>
-              <p><strong>Age:</strong> {{ request.dog_age }}</p>
-              <p><strong>Size:</strong> {{ request.dog_size }}</p>
-              <p><strong>Start Time:</strong> {{ request.formatted_start_time }}</p>
-              <p><strong>End Time:</strong> {{ request.formatted_end_time }}</p>
-              <p><strong>Status:</strong> <span :class="getStatusClass(request.status)">{{ request.status }}</span></p>
+    <div v-else>
+      <!-- Simple Tabs -->
+      <ul class="nav nav-tabs nav-fill mb-4" role="tablist">
+        <li class="nav-item">
+          <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pending" type="button">
+            Pending ({{ pendingRequests.length }})
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#historic" type="button">
+            Historic ({{ historicRequests.length }})
+          </button>
+        </li>
+      </ul>
+
+      <!-- Tab Content -->
+      <div class="tab-content">
+        <!-- Pending Requests -->
+        <div class="tab-pane fade show active" id="pending">
+          <div v-if="pendingRequests.length === 0" class="text-center text-muted">
+            No pending requests
+          </div>
+          <div v-else>
+            <!-- Walker View - Pending -->
+            <div v-if="isWalker">
+              <div v-for="request in pendingRequests" :key="request.id" class="card mb-3 border-warning">
+                <div class="card-body text-center">
+                  <h5 class="card-title mb-3">Request from {{ request.owner_name }}</h5>
+                  <div class="row mb-3">
+                    <div class="col-6">
+                      <p><strong>Dog:</strong> {{ request.dog_name }}</p>
+                      <p><strong>Breed:</strong> {{ request.dog_breed }}</p>
+                    </div>
+                    <div class="col-6">
+                      <p><strong>Age:</strong> {{ request.dog_age }}</p>
+                      <p><strong>Size:</strong> {{ request.dog_size }}</p>
+                    </div>
+                  </div>
+                  <p class="mb-3"><strong>Time:</strong> {{ request.formatted_start_time }} - {{ request.formatted_end_time }}</p>
+                  <div>
+                    <button @click="handleAccept(request.id)" class="btn btn-success btn-sm me-2">Accept</button>
+                    <button @click="handleReject(request.id)" class="btn btn-danger btn-sm">Reject</button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div v-if="request.status === 'pending'" class="mt-3">
-              <button @click="handleAccept(request.id)" class="btn btn-success me-2">Accept</button>
-              <button @click="handleReject(request.id)" class="btn btn-danger">Reject</button>
+
+            <!-- Owner View - Pending -->
+            <div v-else>
+              <div v-for="request in pendingRequests" :key="request.id" class="card mb-3 border-warning">
+                <div class="card-body">
+                  <h5 class="card-title">Request to {{ request.walker_name }}</h5>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <p><strong>Dog:</strong> {{ request.dog_name }}</p>
+                      <p><strong>Time:</strong> {{ request.formatted_start_time }} - {{ request.formatted_end_time }}</p>
+                    </div>
+                    <div class="col-md-4 text-end">
+                      <button @click="handleCancel(request.id)" class="btn btn-outline-danger btn-sm">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Owner View -->
-      <div v-else class="col-12">
-        <div v-for="request in requests" :key="request.id" class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title">Request to {{ request.walker_name }}</h5>
-            <div class="card-text">
-              <p><strong>Dog:</strong> {{ request.dog_name }}</p>
-              <p><strong>Start Time:</strong> {{ request.formatted_start_time }}</p>
-              <p><strong>End Time:</strong> {{ request.formatted_end_time }}</p>
-              <p><strong>Status:</strong> <span :class="getStatusClass(request.status)">{{ request.status }}</span></p>
-              <p><strong>Created:</strong> {{ request.formatted_created_at }}</p>
+        <!-- Historic Requests -->
+        <div class="tab-pane fade" id="historic">
+          <div v-if="historicRequests.length === 0" class="text-center text-muted">
+            No historic requests
+          </div>
+          <div v-else>
+            <!-- Walker View - Historic -->
+            <div v-if="isWalker">
+              <div v-for="request in historicRequests" :key="request.id" class="card mb-3">
+                <div class="card-body text-center">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title mb-0">Request from {{ request.owner_name }}</h5>
+                    <span :class="getStatusClass(request.status)" class="fw-bold">{{ request.status }}</span>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <p><strong>Dog:</strong> {{ request.dog_name }}</p>
+                      <p><strong>Breed:</strong> {{ request.dog_breed }}</p>
+                    </div>
+                    <div class="col-6">
+                      <p><strong>Age:</strong> {{ request.dog_age }}</p>
+                      <p><strong>Size:</strong> {{ request.dog_size }}</p>
+                    </div>
+                  </div>
+                  <p><strong>Time:</strong> {{ request.formatted_start_time }} - {{ request.formatted_end_time }}</p>
+                </div>
+              </div>
             </div>
-            <div v-if="request.status === 'pending'" class="mt-3">
-              <button @click="handleCancel(request.id)" class="btn btn-danger"> Cancel Request</button>
+
+            <!-- Owner View - Historic -->
+            <div v-else>
+              <div v-for="request in historicRequests" :key="request.id" class="card mb-3">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <h5 class="card-title">Request to {{ request.walker_name }}</h5>
+                    <span :class="getStatusClass(request.status)" class="fw-bold">{{ request.status }}</span>
+                  </div>
+                  <p><strong>Dog:</strong> {{ request.dog_name }}</p>
+                  <p><strong>Time:</strong> {{ request.formatted_start_time }} - {{ request.formatted_end_time }}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -148,6 +231,12 @@ export default {
   transition: transform 0.2s;
 }
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-2px);
+}
+.nav-tabs .nav-link {
+  cursor: pointer;
+}
+.border-warning {
+  border-color: #ffc107 !important;
 }
 </style>
