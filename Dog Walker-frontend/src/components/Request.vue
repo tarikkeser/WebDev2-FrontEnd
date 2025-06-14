@@ -46,7 +46,7 @@ export default {
         // Refresh requests
         await this.requestStore.fetchRequestsByWalker();
       } catch (error) {
-        this.error = "Failed to accept request";
+        this.error = "To accept this request, you must cancel appointment at the same time slot!";
       }
     },
     // walker
