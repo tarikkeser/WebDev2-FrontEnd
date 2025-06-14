@@ -74,11 +74,21 @@ export default {
     alert('Request sent successfully!');
   } catch (error) {
     console.error('Request error:', error); // For debugging
-    this.error = error.response?.data?.message || error.message;
+     if (error.response && error.response.status === 500) {
+      this.error = "This dog already has a booked appointment in that time slot.";
+    }
   } finally {
     this.loading = false;
   }
 },
+  },
+  computed: {
+   minDateTime() {
+    const now = new Date();
+    const offset = now.getTimezoneOffset();
+    const localDate = new Date(now.getTime() - offset * 60 * 1000);
+    return localDate.toISOString().slice(0, 16);
+    },
   },
 };
 </script>
@@ -134,7 +144,8 @@ export default {
                   type="datetime-local"
                   class="form-control"
                   v-model="requestData.start_time"
-                  required
+                    :min="minDateTime"
+                    required
                 />
               </div>
 
@@ -145,7 +156,8 @@ export default {
                   type="datetime-local"
                   class="form-control"
                   v-model="requestData.end_time"
-                  required
+                    :min="requestData.start_time || minDateTime"
+                    required
                 />
               </div>
 
